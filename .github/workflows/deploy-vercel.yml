@@ -16,29 +16,24 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-        
+
     - name: Install dependencies
       run: npm ci
 
     - name: Install Vercel CLI
       run: npm install -g vercel
 
-    - name: Pull Vercel Environment
+    - name: Pull, Build, Deploy Vercel Environment
       run: |
          vercel pull --yes --environment=${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }} --token=$VERCEL_TOKEN
-
-    - name: Build Project
-      run: vercel build --token=$VERCEL_TOKEN
-
-    - name: Deploy to Vercel
-      run: | 
-        if [["${{ github.ref }}" == "refs/heads/main" ]]; then
-          echo "Deploying to Production"
-          vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
-        else
-          echo "Deploying to Preview"
-          vercel deploy --prebuilt --token=$VERCEL_TOKEN
-        fi
+         vercel build --token=$VERCEL_TOKEN 
+         if [["${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "Deploying to Production"
+            vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
+         else
+            echo "Deploying to Preview"
+            vercel deploy --prebuilt --token=$VERCEL_TOKEN
+         fi
 
       env:
         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
