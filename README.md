@@ -2,7 +2,7 @@ This is a To Do List Web Application built with nextJS, TailwindCSS, PrismaORM a
 
 ## Live Environments
 
-- Production #
+- Production https://get-it-done-eta.vercel.app/
 - Playground #
 
 ## To Run
