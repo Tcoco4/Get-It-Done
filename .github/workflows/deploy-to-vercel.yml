@@ -27,7 +27,7 @@ jobs:
       run: |
          vercel pull --yes --environment=${{ github.ref == 'refs/heads/main' && 'production' || 'preview' }} --token=$VERCEL_TOKEN
          vercel build --token=$VERCEL_TOKEN 
-         if [["${{ github.ref }}" == "refs/heads/main" ]]; then
+         if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
             echo "Deploying to Production"
             vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN
          else
