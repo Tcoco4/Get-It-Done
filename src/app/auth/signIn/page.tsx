@@ -1,64 +1,101 @@
 "use client";
-import { Button } from "@heroui/react";
+import { Button, Checkbox } from "@heroui/react";
 import { Divider, Form, Input } from "@heroui/react";
 import { Text } from "@/components/text";
 import "../../globals.css";
 
 export default function SignIn() {
   return (
-    <div
-      style={{ padding: " 16px" }}
-      className="flex w-3/5 flex-col gap self-center justify-self-center md:w-2/5 lg:col-span-2"
-    >
-      <h2 className="text-4xl font-bold text-primary dark:text-white center">
-        Sign in
-      </h2>
-      <Divider />
+    <div className="flex items-center justify-center min-h-screen">
+      <div>
+        <h2 className="text-4xl font-bold text-black dark:text-white center">
+          Sign in to Get It Done
+        </h2>
+        <Divider />
 
-      <div className="grid gap">
-        <Form>
-          <fieldset style={{ padding: " 16px" }}>
-            <Input
-              isRequired
-              label="Username"
-              name="username"
-              type="text"
-              variant="bordered"
-            ></Input>
-            <Input
-              isRequired
-              label="Password"
-              labelPlacement="outside"
-              name="password"
-              type="password"
-              variant="bordered"
-            />
-
-            <div className="flex gap-2">
-              <Input type="checkbox" label="Remember me" className="text-sm " />
-
-              <Text className="text-sm underline">Forgot password?</Text>
-            </div>
-            <div className="flex gap-2">
-              <Button color="primary" type="submit" variant="solid">
+        <div className="grid gap ">
+          <Form>
+            <fieldset className="flex w-full flex-wrap pt-2">
+              <Input
+                isRequired
+                label="Username"
+                labelPlacement="outside"
+                name="username"
+                type="text"
+                variant="bordered"
+              ></Input>
+              <Input
+                className="pt-2"
+                isRequired
+                label="Password"
+                labelPlacement="outside"
+                name="password"
+                type="password"
+                variant="bordered"
+              />
+              <div className="flex justify-between gap">
+                {/* <Checkbox size="sm">Rememeber me</Checkbox> */}
+                <Text className="text-sm underline pt-4">Forgot password?</Text>
+              </div>
+            </fieldset>
+            <div className="flex gap-2 w-full max-w ">
+              <Button
+                color="default"
+                type="submit"
+                variant="solid"
+                className="w-full bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900"
+              >
                 Submit
               </Button>
-              <Button color="success" type="reset" variant="faded">
+              {/* <Button color="primary" type="reset" variant="solid">
                 Reset
-              </Button>
+              </Button> */}
             </div>
-
-            <div className="p-4">
-              <h1 className="text-2xl font-bold text-blue-500 mb-4">
-                Tailwind v4 + HeroUI
-              </h1>
-              <Button variant="solid" color="primary">
-                HeroUI Button
-              </Button>
-            </div>
-          </fieldset>
-        </Form>
+          </Form>
+          <div className="flex gap-2 w-full max-w pt-8">
+            <Button
+              color="default"
+              type="submit"
+              variant="bordered"
+              className="w-full bg-white px-4 py-2 rounded-md hover:bg-gray-200 font-bold text-l"
+            >
+              <GoogleSVG />
+              Continue with Google
+            </Button>
+            {/* <Button color="primary" type="reset" variant="solid">
+                Reset
+              </Button> */}
+          </div>
+        </div>
       </div>
     </div>
+  );
+}
+
+function GoogleSVG() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 48 48"
+      width="48px"
+      height="48px"
+    >
+      <path
+        fill="#fbc02d"
+        d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12	s5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24s8.955,20,20,20	s20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+      />
+      <path
+        fill="#e53935"
+        d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039	l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+      />
+      <path
+        fill="#4caf50"
+        d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36	c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+      />
+      <path
+        fill="#1565c0"
+        d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+      />
+    </svg>
   );
 }
