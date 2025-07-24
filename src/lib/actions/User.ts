@@ -21,14 +21,14 @@ export async function getUser(
     },
     select: {
       id: true,
-      username: true,
+      email: true,
     },
   });
 
   if (!authorizedUser) return null;
 
   return {
-    name: authorizedUser.username,
+    name: authorizedUser.email,
     id: authorizedUser.id.toString(),
   };
 }
