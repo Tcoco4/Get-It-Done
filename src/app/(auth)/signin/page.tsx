@@ -1,14 +1,24 @@
 "use client";
 import { Button, Checkbox } from "@heroui/react";
 import { Divider, Form, Input } from "@heroui/react";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { Text } from "@/components/text";
 import "../../globals.css";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function SignIn() {
+  const { data: session, status } = useSession();
   const router = useRouter();
 
+  // useEffect(() => {
+  //   if (status === "authenticated") {
+  //     router.push("/dashboard");
+  //   }
+  //   console.log(status);
+  // }, [status, router]);
+
+  console.log(status);
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div>
@@ -48,6 +58,7 @@ export default function SignIn() {
                 type="submit"
                 variant="solid"
                 className="w-full bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900"
+                onClick={async () => signIn("credentials", { redirect: false })}
               >
                 Submit
               </Button>
@@ -63,9 +74,7 @@ export default function SignIn() {
               variant="bordered"
               className="w-full bg-white px-4 py-2 rounded-md hover:bg-gray-200 font-bold text-l"
               onClick={async () =>
-                signIn("google", { redirect: false }).then((_) =>
-                  router.push("/dashboard")
-                )
+                signIn("google", { callbackUrl: "/dashboard" })
               }
             >
               <GoogleSVG />
