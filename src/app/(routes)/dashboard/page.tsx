@@ -9,14 +9,14 @@ export default function Dashboard() {
   const { data: session, status } = useSession();
 
   const router = useRouter();
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.push("/signin");
-    }
-  }, [status, router]);
+  // useEffect(() => {
+  //   if (status === "unauthenticated") {
+  //     router.push("/signin");
+  //   }
+  // }, [status, router]);
 
-  console.log(status);
-  if (status === "loading") return <p>Loading...</p>;
+  // console.log(status);
+  // if (status === "loading") return <p>Loading...</p>;
   return (
     <div className="flex items-center justify-between min-h-screen">
       <h2>This is Dashboard</h2>
