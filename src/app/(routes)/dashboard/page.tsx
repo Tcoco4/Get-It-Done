@@ -21,14 +21,14 @@ export default function Dashboard() {
     <div className="flex items-center justify-between min-h-screen">
       <h2>This is Dashboard</h2>
       <div>
-        <Button
+        {/* <Button
           color="primary"
           type="submit"
           variant="solid"
           onClick={async () => signOut({ callbackUrl: "/signin" })}
         >
           SignOut
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
