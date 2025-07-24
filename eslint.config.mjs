@@ -22,6 +22,7 @@ export default defineConfig([
         "warn",
         { argsIgnorePattern: "^_" },
       ],
+      "@next/next/google-font-display": ["error", "swap"],
     },
   },
   {
