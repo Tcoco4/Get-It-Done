@@ -1,6 +1,6 @@
-import prisma from "@/repository/prisma";
+import prisma from "../prisma-client/prisma";
 import crypto from "crypto";
-import { AuthenticatedUser } from "./types";
+import { AuthenticatedUser } from "../types";
 
 export async function getUser(
   email: string,
