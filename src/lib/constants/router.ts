@@ -4,7 +4,6 @@ export const NAVIGATION = [
     icon: "",
     label: "Dashboard",
     tooltipDescription: "Task Dashboard",
-    matchPath: (pathname: string) =>
-      pathname === "/dashboard" || pathname === "/",
+    matchPath: (pathname: string) => pathname === "/dashboard",
   },
 ];

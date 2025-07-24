@@ -4,8 +4,8 @@ import GoogleProvider from "next-auth/providers/google";
 
 export const options: NextAuthOptions = {
   pages: {
-    signIn: "/signin",
     signOut: "/signout",
+    signIn: "/signin",
   },
   providers: [
     Credentials({
@@ -33,6 +33,19 @@ export const options: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
   ],
+  callbacks: {
+    async jwt({ token, account }) {
+      if (account) {
+        token.accessToken = account.access_token;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      session.accessToken = token.accessToken;
+      return session;
+    },
+  },
 };
