@@ -1,3 +1,4 @@
+import { getUser } from "@/lib/actions/User";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -24,8 +25,8 @@ export const options: NextAuthOptions = {
       },
       async authorize(credentials) {
         const authorizedUser = await getUser(
-          credentials?.email,
-          credentials?.password
+          credentials!.email,
+          credentials!.password
         );
         return authorizedUser;
       },
