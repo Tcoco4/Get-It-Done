@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, NextApiRequest } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SessionProvider from "./session-provider";
@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <SessionProvider>
-          <TokenValidator />
+          {/* <TokenValidator /> */}
           {children}
         </SessionProvider>
       </body>
