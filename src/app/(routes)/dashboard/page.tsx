@@ -5,22 +5,24 @@ import { Button, Input, Progress } from "@heroui/react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Text } from "@/components/text";
+import { List } from "@/lib/types";
 
 export default function Dashboard() {
-  const { data: session, status } = useSession();
-
-  const router = useRouter();
-
+  const myList: List[] = [
+    { title: "BE Bugs", total: 10, completed: 5 },
+    { title: "FE Bugs", total: 10, completed: 8 },
+    { title: "Get Started", total: 9, completed: 7 },
+  ]; //temporary
   return (
     <div>
-      <main>
-        <div className="flex items-center justify-center max-h-screen pt-8">
+      <main className="w-full min-h-screen p-6 ">
+        <div id="title" className="flex items-center justify-center pt-8">
           <h2 className="text-3xl font-bold text-black dark:text-white center">
             To Do
           </h2>
         </div>
-        <div className="flex items-center justify-center max-h-screen pt-2">
-          <div id="search" className=" flex w-3/5 justify-center items-center ">
+        <div id="search" className="flex items-center justify-center pt-2">
+          <div className=" flex w-3/5 ">
             <Input
               isClearable
               placeholder="Search for a Task"
@@ -34,34 +36,35 @@ export default function Dashboard() {
             />
           </div>
         </div>
-        {/* <div className="flex items-center justify-center max-h-screen pt-2">
-          <div
-            id="list"
-            className=" flex w-3/5 justify-center items-center pt-4 "
-          >
-            <div
-              id="progress"
-              className="w-full bg-white text-black px-4 py-2 rounded-md border-2 border-black pointer-events-none"
-            >
-              <div className="w-full flex justify-between">
-                <p> My List</p>
-                <p> 0/10</p>
-              </div>
-            </div>
+        <div id="my-list" className="flex items-center justify-center pt-2 ">
+          <div className=" flex w-3/5  items-center justify-center  ">
+            <ul className="w-full space-y-2">
+              {myList.map((list, index) => (
+                <Button
+                  key={index}
+                  variant="bordered"
+                  className="w-full bg-white flex  rounded-md border-gray-200 hover:border-black justify-between "
+                >
+                  <p>{list.title}</p>
+                  <p>
+                    {list.completed}/{list.total}
+                  </p>
+                </Button>
+              ))}
+            </ul>
           </div>
-        </div> */}
-      </main>
-      <footer className=" flex  flex-wrap items-center justify-center">
-        <div id="get-started" className=" pt-4 ">
-          <Button
-            id="add-list"
-            variant="bordered"
-            className="w-full bg-black text-white px-4 py-2 rounded-md "
-          >
-            + New List
-          </Button>
         </div>
-      </footer>
+        <div id="add-list" className="flex items-center justify-center">
+          <div className=" pt-4 ">
+            <Button
+              variant="bordered"
+              className="w-full bg-black text-white px-4 py-2 rounded-md "
+            >
+              + New List
+            </Button>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
