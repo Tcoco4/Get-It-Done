@@ -60,7 +60,7 @@ export default function Dashboard() {
             <Button
               variant="bordered"
               className="w-full bg-black text-white px-4 py-2 rounded-md "
-              onClick={() => router.push("/task")}
+              onPress={() => router.push("/task")}
             >
               + New List
             </Button>

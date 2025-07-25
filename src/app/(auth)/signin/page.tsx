@@ -58,7 +58,7 @@ export default function SignIn() {
                 type="submit"
                 variant="solid"
                 className="w-full bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900"
-                onClick={async () => signIn("credentials", { redirect: false })}
+                onPress={async () => signIn("credentials", { redirect: false })}
               >
                 Submit
               </Button>
@@ -73,7 +73,7 @@ export default function SignIn() {
               type="submit"
               variant="bordered"
               className="w-full bg-white px-4 py-2 rounded-md hover:bg-gray-200 font-bold text-l"
-              onClick={async () =>
+              onPress={async () =>
                 signIn("google", { callbackUrl: "/dashboard" })
               }
             >

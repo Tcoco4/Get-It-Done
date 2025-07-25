@@ -8,17 +8,12 @@ export interface List {
   title: string;
   total: number;
   completed: number;
+  tasks?: Task[];
 }
 
-export interface Task {
+export type Task = {
   name: string;
-  description: string;
-  due: Date;
-  status: Status;
-}
-
-export enum Status {
-  ToDO = "toDo",
-  Started = "started",
-  Completed = "completed",
-}
+  complete: boolean;
+  taskDue?: Date | string;
+  additionalInformation?: string;
+};
