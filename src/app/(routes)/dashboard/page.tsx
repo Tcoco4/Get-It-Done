@@ -8,6 +8,7 @@ import { Text } from "@/components/text";
 import { List } from "@/lib/types";
 
 export default function Dashboard() {
+  const router = useRouter();
   const myList: List[] = [
     { title: "BE Bugs", total: 10, completed: 5 },
     { title: "FE Bugs", total: 10, completed: 8 },
@@ -59,6 +60,7 @@ export default function Dashboard() {
             <Button
               variant="bordered"
               className="w-full bg-black text-white px-4 py-2 rounded-md "
+              onClick={() => router.push("/task")}
             >
               + New List
             </Button>
