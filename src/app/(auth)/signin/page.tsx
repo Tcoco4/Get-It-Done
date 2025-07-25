@@ -1,5 +1,5 @@
 "use client";
-import { Button, Checkbox } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { Divider, Form, Input } from "@heroui/react";
 import { signIn, useSession } from "next-auth/react";
 import { Text } from "@/components/text";
@@ -62,9 +62,6 @@ export default function SignIn() {
               >
                 Submit
               </Button>
-              {/* <Button color="primary" type="reset" variant="solid">
-                Reset
-              </Button> */}
             </div>
           </Form>
           <div className="flex gap-2 w-full max-w pt-8">
@@ -80,9 +77,6 @@ export default function SignIn() {
               <GoogleSVG />
               Continue with Google
             </Button>
-            {/* <Button color="primary" type="reset" variant="solid">
-                Reset
-              </Button> */}
           </div>
         </div>
       </div>

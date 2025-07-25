@@ -66,6 +66,19 @@ export default function Dashboard() {
             </Button>
           </div>
         </div>
+        <div className="flex items-center justify-center">
+          <div className="w-3/5  pt-25">
+            <Button
+              color="primary"
+              type="submit"
+              variant="solid"
+              className="bg-black text-white px-4 py-2 rounded-lg "
+              onPress={async () => signOut({ callbackUrl: "/signin" })}
+            >
+              Sign Out
+            </Button>
+          </div>
+        </div>
       </main>
     </div>
   );
