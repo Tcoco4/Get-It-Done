@@ -8,9 +8,9 @@ import { List } from "@/lib/types";
 export default function Dashboard() {
   const router = useRouter();
   const myList: List[] = [
-    { title: "BE Bugs", total: 10, completed: 5 },
-    { title: "FE Bugs", total: 10, completed: 8 },
-    { title: "Get Started", total: 9, completed: 7 },
+    { name: "BE Bugs", total: 10, completed: 5 },
+    { name: "FE Bugs", total: 10, completed: 8 },
+    { name: "Get Started", total: 9, completed: 7 },
   ]; //temporary
   return (
     <div>
@@ -44,7 +44,7 @@ export default function Dashboard() {
                   variant="bordered"
                   className="w-full bg-white flex  rounded-md border-gray-200 hover:border-black justify-between "
                 >
-                  <p>{list.title}</p>
+                  <p>{list.name}</p>
                   <p>
                     {list.completed}/{list.total}
                   </p>

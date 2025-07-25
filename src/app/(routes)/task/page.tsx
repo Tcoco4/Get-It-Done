@@ -19,7 +19,7 @@ export default function Task() {
   };
 
   const list: List = {
-    title: "Get Started",
+    name: "Get Started",
     total: 0,
     completed: 0,
     tasks: [
@@ -76,7 +76,7 @@ export default function Task() {
         <div id="title" className="flex items-center justify-center p-2">
           <div className="flex w-3/5">
             <div className=" flex justify-between w-full">
-              <h1 className="text-4xl font-medium "> {list.title}</h1>
+              <h1 className="text-4xl font-medium "> {list.name}</h1>
               <div className="  ">
                 <div className="flex justify-between">
                   <div className="flex justify-between pt-1.5">

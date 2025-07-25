@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/actions/User";
+import { addUser, getUser } from "@/lib/actions/actions";
 import { NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -24,10 +24,7 @@ export const options: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        const authorizedUser = await getUser(
-          credentials!.email,
-          credentials!.password
-        );
+        const authorizedUser = await getUser(credentials!.email);
         return authorizedUser;
       },
     }),
@@ -46,6 +43,11 @@ export const options: NextAuthOptions = {
     },
     async session({ session, token, user }) {
       return { ...session, accessToken: token.accessToken };
+    },
+    async signIn({ user }) {
+      const foundUser = await getUser(user.email!);
+      if (!foundUser) await addUser(user.email!);
+      return true;
     },
   },
 };

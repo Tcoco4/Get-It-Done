@@ -17,10 +17,12 @@ export const createList = async (
 ): Promise<number> => {
   const newList = await prisma.list.create({
     data: {
-      name: list.title,
+      name: list.name,
       total: list.total,
       completed: list.completed,
-      tasks: [],
+      tasks: {
+        create: [],
+      },
       auditStatus: "active",
       userId: userId,
     },
@@ -29,7 +31,7 @@ export const createList = async (
   return newList.id;
 };
 
-export const getList = async (id: number): Promise<List[] | Error> => {
+export const getList = async (id: number): Promise<List> => {
   const list = await prisma.list.findFirst({
     where: { id: id },
   });
@@ -53,23 +55,21 @@ export const deleteList = async (id: number): Promise<boolean | Error> => {
 
 //Tasks
 export const addTask = async (task: Task, listId: number): Promise<number> => {
-  const newTask = await prisma.task
-    .create({
-      data: {
-        title: task.name,
-        completed: task.complete,
-        taskDue: task.taskDue,
-        additional: task.additionalInformation,
-        auditStatus: "active",
-        list: {
-          connect: { id: listId },
-        },
+  const newTask = await prisma.task.create({
+    data: {
+      name: task.name,
+      complete: task.complete,
+      taskDue: task.taskDue,
+      additional: task.additionalInformation,
+      auditStatus: "active",
+      list: {
+        connect: { id: listId },
       },
-    })
-    .catch((err: any) => console.error(err));
+    },
+  });
   return newTask.id;
 };
-export const getTask = async (id: number): Promise<Task | Error> => {
+export const getTask = async (id: number): Promise<Task> => {
   const task = await prisma.task.findFirst({
     where: { id: id, auditStatus: "active" },
   });
@@ -80,12 +80,12 @@ export const deleteTask = async (
   taskId: number,
   listId: number
 ): Promise<boolean> => {
-  const task = await prisma.task
-    .update({
-      where: { id: taskId, listId: listId },
-      data: { auditStatus: "deleted" },
-    })
-    .catch((err: any) => console.error(err));
+  const task = await prisma.task.update({
+    where: { id: taskId, listId: listId },
+    data: { auditStatus: "deleted" },
+    select: { auditStatus: true },
+  });
+  // .catch((err: any) => console.error(err));
 
   return task.auditStatus == "deleted" ? true : false;
 };
@@ -114,31 +114,23 @@ export const updateTaskTitle = async (
 //User
 
 export const addUser = async (email: string): Promise<boolean> => {
-  const user = await prisma.User.create({
+  const user = await prisma.user.create({
     data: {
       email: email,
-      list: [],
+      list: {
+        create: [],
+      },
     },
   });
   return user ? true : false;
 };
 
 export const getUser = async (
-  email: string,
-  password: string
+  email: string
 ): Promise<AuthenticatedUser | null> => {
-  const salt = process.env["NEXTAUTH_SECRET"] ?? "salty";
-  const saltedPassword = password + salt;
-
-  const saltedAndHashedPassword = crypto
-    .createHash("sha512")
-    .update(saltedPassword)
-    .digest("base64");
-
-  const authorizedUser = await prisma.authorizedUser.findFirst({
+  const authorizedUser = await prisma.user.findFirst({
     where: {
       email: email,
-      password: saltedAndHashedPassword,
     },
     select: {
       id: true,
@@ -147,9 +139,8 @@ export const getUser = async (
   });
 
   if (!authorizedUser) return null;
-
   return {
-    name: authorizedUser.email,
+    email: authorizedUser.email,
     id: authorizedUser.id.toString(),
   };
 };

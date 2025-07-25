@@ -2,10 +2,9 @@ export interface AuthenticatedUser {
   id: string;
   name?: string;
   email?: string;
-  image?: any;
 }
 export interface List {
-  title: string;
+  name: string;
   total: number;
   completed: number;
   tasks?: Task[];
@@ -14,6 +13,6 @@ export interface List {
 export type Task = {
   name: string;
   complete: boolean;
-  taskDue?: Date | string;
+  taskDue?: string | null;
   additionalInformation?: string;
 };
