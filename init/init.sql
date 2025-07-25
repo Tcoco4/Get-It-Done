@@ -1,2 +1,2 @@
 
-INSERT INTO User (email, password) VALUES ('admin@gmail.com', 'da6f9e49efe0b9aba790de38f385b18764471adcda8b7cb2bf9e2946ce3078a41d4b20037c77728412ec71b06f18bfd7129a301022305e010cad13147507a096');
+INSERT INTO "User" (email, password) VALUES ('admin@gmail.com', 'da6f9e49efe0b9aba790de38f385b18764471adcda8b7cb2bf9e2946ce3078a41d4b20037c77728412ec71b06f18bfd7129a301022305e010cad13147507a096');
