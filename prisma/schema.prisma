@@ -13,7 +13,7 @@ model User {
   id        Int     @id @default(autoincrement())
   email     String
   password  String?
-  list      List[]?
+  list      List[]
 }
 
 model Task {
@@ -23,15 +23,17 @@ model Task {
   taskDue     String?
   additional  String?
   listId      Int
+  auditStatus String
   list        List  @relation(fields:[listId],references: [id])
 
 }
 model List{
   id          Int     @id @default(autoincrement())
   name        String
-  total       Number
-  completed   Number
+  total       Int
+  completed   Int
   tasks       Task[]
+  auditStatus String
   userId      Int
   user        User  @relation(fields: [userId], references: [id])
 }
