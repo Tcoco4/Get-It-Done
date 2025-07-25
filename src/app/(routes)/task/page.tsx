@@ -3,12 +3,14 @@ import TaskModal from "@/components/task-modal";
 import DeleteIcon from "@/components/delete-icon";
 import EditIcon from "@/components/edit-con";
 import { List } from "@/lib/types";
-// import type { Task } from "@libs/types";
+
 import { Button, Checkbox, useDisclosure } from "@heroui/react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Task() {
   const [isSelected, setIsSelected] = useState(false);
+  const router = useRouter();
   type Task = {
     name: string;
     complete: boolean;
@@ -127,6 +129,19 @@ export default function Task() {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+        <div className="flex items-center justify-center pt-25">
+          <div className=" w-3/5 flex justify-start">
+            <Button
+              color="primary"
+              type="submit"
+              variant="solid"
+              className="bg-black text-white px-4 py-2 rounded-md "
+              onPress={async () => router.push("/dashboard")}
+            >
+              Back
+            </Button>
           </div>
         </div>
       </main>

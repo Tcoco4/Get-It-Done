@@ -1,10 +1,8 @@
 "use client";
-
 import SearchIcon from "@/components/search-icon";
-import { Button, Input, Progress } from "@heroui/react";
-import { signOut, useSession } from "next-auth/react";
+import { Button, Input } from "@heroui/react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Text } from "@/components/text";
 import { List } from "@/lib/types";
 
 export default function Dashboard() {
@@ -63,6 +61,19 @@ export default function Dashboard() {
               onPress={() => router.push("/task")}
             >
               + New List
+            </Button>
+          </div>
+        </div>
+        <div className="flex items-center justify-center pt-25">
+          <div className=" w-3/5 flex justify-start">
+            <Button
+              color="primary"
+              type="submit"
+              variant="solid"
+              className="bg-black text-white px-4 py-2 rounded-md "
+              onPress={async () => signOut({ callbackUrl: "/signin" })}
+            >
+              SignOut
             </Button>
           </div>
         </div>
