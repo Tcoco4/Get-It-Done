@@ -1,7 +1,9 @@
+"use client";
+import TaskModal from "@/components/task-modal";
 import DeleteIcon from "@/components/delete-icon";
 import EditIcon from "@/components/edit-con";
 import { List } from "@/lib/types";
-import { Button, Checkbox } from "@heroui/react";
+import { Button, Checkbox, useDisclosure } from "@heroui/react";
 
 export default function Task() {
   const List: List = {
@@ -9,6 +11,7 @@ export default function Task() {
     total: 0,
     completed: 0,
   };
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   return (
     <div>
       <main className="w-full min-h-screen p-6">
@@ -23,9 +26,17 @@ export default function Task() {
                     <DeleteIcon className="p-1" />
                   </div>
 
-                  <Button className="bg-black text-white px-4 py-2 rounded-md ">
+                  <Button
+                    className="bg-black text-white px-4 py-2 rounded-md "
+                    onPress={onOpen}
+                  >
                     + New Task
                   </Button>
+                  <TaskModal
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    onOpenChange={onOpenChange}
+                  />
                 </div>
               </div>
             </div>
