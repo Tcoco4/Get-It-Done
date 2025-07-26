@@ -2,27 +2,21 @@
 import TaskModal from "@/components/task-modal";
 import DeleteIcon from "@/components/delete-icon";
 import EditIcon from "@/components/edit-con";
-import { List } from "@/lib/types";
+import { List, Task } from "@/lib/types";
 
 import { Button, Checkbox, useDisclosure } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getList } from "@/lib/actions/actions";
+import { getList, updateTaskStatus } from "@/lib/actions/actions";
 import { useParams } from "next/navigation";
 
-export default function Task() {
+export default function ListPage() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   const [list, setList] = useState<List | null>();
   const router = useRouter();
   const params = useParams();
-  type Task = {
-    name: string;
-    complete: boolean;
-    taskDue?: null | string;
-    additionalInformation?: string;
-  };
 
   const listId = params.id;
 
@@ -38,9 +32,14 @@ export default function Task() {
     };
     fetchList();
   }, [listId]);
-  const updateTaskStatus = (task: Task): void => {
-    console.log({ task });
-    setIsSelected(!isSelected);
+
+  console.log(list);
+  const updateStatus = (value: boolean, task: Task): void => {
+    console.log("updateTaskStatus");
+    updateTaskStatus(task.id, value).then((res) => {
+      console.log(res);
+      task.complete = res;
+    });
     // task.complete = !task.complete;
     //Server action call to change object and save to db
   };
@@ -66,6 +65,7 @@ export default function Task() {
                     + New Task
                   </Button>
                   <TaskModal
+                    listId={parseInt(listId as string)}
                     isOpen={isOpen}
                     onClose={onClose}
                     onOpenChange={onOpenChange}
@@ -86,9 +86,9 @@ export default function Task() {
                         lineThrough
                         color="default"
                         isSelected={task?.complete}
-                        onValueChange={() => updateTaskStatus(task)}
+                        onValueChange={(e) => updateStatus(e, task.id)}
                       >
-                        <p className="text-white">{task?.name}</p>
+                        ,<p className="text-white">{task?.name}</p>
                       </Checkbox>
                     </td>
 

@@ -83,7 +83,7 @@ export default function Dashboard() {
               onPress={async () => {
                 const list = await createList(newList, parseInt(userId)).then(
                   (id) => {
-                    router.push(`/task/${id}`);
+                    router.push(`/list/${id}`);
                   }
                 );
               }}
