@@ -17,14 +17,16 @@ export default function Dashboard() {
     const fetchLists = async () => {
       try {
         if (status === "unauthenticated") router.push("/signin");
-        const totalLists = await getAllLists(userId);
-        setMyList(totalLists);
+        if (userId != undefined) {
+          const totalLists = await getAllLists(parseInt(userId));
+          setMyList(totalLists);
+        }
       } catch (err) {
         console.error(err);
       }
-      fetchLists();
     };
-  }, [status, userId]);
+    fetchLists();
+  }, [userId]);
   if (status === "loading")
     return (
       <>
