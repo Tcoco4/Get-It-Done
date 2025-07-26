@@ -9,7 +9,6 @@ export default function SignIn() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  console.log(status);
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div>
