@@ -12,6 +12,7 @@ import {
   updateTaskStatus,
   updateListName,
   deleteList,
+  deleteTask,
 } from "@/lib/actions/actions";
 import { useParams } from "next/navigation";
 
@@ -43,7 +44,7 @@ export default function ListPage() {
     taskId: number
   ): Promise<void> => {
     await updateTaskStatus(taskId, value).then((res) => {
-      //refresh component to get latest data
+      //refresh component
     });
   };
   const updateName = async (
@@ -51,7 +52,7 @@ export default function ListPage() {
     listId: number
   ): Promise<void> => {
     await updateListName(listId, listName).then((_) => {
-      //refresh component to get latest data
+      //refresh component
     });
   };
 
@@ -60,6 +61,15 @@ export default function ListPage() {
       router.push("/dashboard");
     });
   };
+  const deleteTheTask = async (
+    taskId: number,
+    listId: number
+  ): Promise<void> => {
+    await deleteTask(taskId, listId).then((_) => {
+      //refresh component
+    });
+  };
+
   return (
     <div>
       <main className="w-full min-h-screen p-6">
@@ -111,33 +121,42 @@ export default function ListPage() {
         </div>
         <div className="flex items-center justify-center pt-5">
           <div id="new-task" className="flex w-3/5  ">
-            <table className=" w-full border-separate border-spacing-y-4 ">
-              <tbody className="rounded-md">
-                {list?.tasks?.map((task, index) => (
-                  <tr key={index} className="bg-black text-white h-15  ">
-                    <td className="px-4 py-2 rounded-l-lg">
-                      <Checkbox
-                        lineThrough
-                        color="default"
-                        isSelected={task?.complete}
-                        onValueChange={(e) => updateStatus(e, task.id)}
-                      >
-                        ,<p className="text-white">{task?.name}</p>
-                      </Checkbox>
-                    </td>
+            {list?.tasks?.length == 0 ? (
+              <p className="flex w-full justify-center items-center text-gray-400">
+                No tasks in list..
+              </p>
+            ) : (
+              <table className=" w-full border-separate border-spacing-y-4 ">
+                <tbody className="rounded-md">
+                  {list?.tasks?.map((task, index) => (
+                    <tr key={index} className="bg-black text-white h-15  ">
+                      <td className="px-4 py-2 rounded-l-lg">
+                        <Checkbox
+                          lineThrough
+                          color="default"
+                          isSelected={task?.complete}
+                          onValueChange={(e) => updateStatus(e, task.id)}
+                        >
+                          ,<p className="text-white">{task?.name}</p>
+                        </Checkbox>
+                      </td>
 
-                    <td className="px-4 py-2 rounded-r-lg flex justify-end gap-2 ">
-                      {task?.complete ? (
-                        <></>
-                      ) : (
-                        <EditIcon className="p-1 fill-white" />
-                      )}
-                      <DeleteIcon className="p-1 fill-white" />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      <td className="px-4 py-2 rounded-r-lg flex justify-end gap-2 ">
+                        {task?.complete ? (
+                          <></>
+                        ) : (
+                          <EditIcon className="p-1 fill-white" />
+                        )}
+                        <DeleteIcon
+                          className="p-1 fill-white"
+                          onClick={() => deleteTheTask(task.id, list.id)}
+                        />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </div>
         <div className="flex items-center justify-center pt-25">

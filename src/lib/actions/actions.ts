@@ -32,7 +32,11 @@ export const createList = async (
 export const getList = async (id: number): Promise<List | null> => {
   const list = await prisma.list.findFirst({
     where: { id: id },
-    include: { tasks: true },
+    include: {
+      tasks: {
+        where: { auditStatus: "active" },
+      },
+    },
   });
   return list;
 };
