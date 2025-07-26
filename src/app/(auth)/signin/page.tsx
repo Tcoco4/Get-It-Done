@@ -1,5 +1,5 @@
 "use client";
-import { Button, Checkbox } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { Divider, Form, Input } from "@heroui/react";
 import { signIn, useSession } from "next-auth/react";
 import { Text } from "@/components/text";
@@ -58,13 +58,10 @@ export default function SignIn() {
                 type="submit"
                 variant="solid"
                 className="w-full bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900"
-                onClick={async () => signIn("credentials", { redirect: false })}
+                onPress={async () => signIn("credentials", { redirect: false })}
               >
                 Submit
               </Button>
-              {/* <Button color="primary" type="reset" variant="solid">
-                Reset
-              </Button> */}
             </div>
           </Form>
           <div className="flex gap-2 w-full max-w pt-8">
@@ -73,16 +70,13 @@ export default function SignIn() {
               type="submit"
               variant="bordered"
               className="w-full bg-white px-4 py-2 rounded-md hover:bg-gray-200 font-bold text-l"
-              onClick={async () =>
+              onPress={async () =>
                 signIn("google", { callbackUrl: "/dashboard" })
               }
             >
               <GoogleSVG />
               Continue with Google
             </Button>
-            {/* <Button color="primary" type="reset" variant="solid">
-                Reset
-              </Button> */}
           </div>
         </div>
       </div>
