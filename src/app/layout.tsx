@@ -1,6 +1,6 @@
 import type { Metadata, NextApiRequest } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import SessionProvider from "./session-provider";
 import TokenValidator from "@/components/token-validator";
 
