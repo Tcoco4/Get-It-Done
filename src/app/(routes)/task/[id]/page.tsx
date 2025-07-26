@@ -18,49 +18,49 @@ export default function Task() {
     additionalInformation?: string;
   };
 
-  const list: List = {
-    name: "Get Started",
-    total: 0,
-    completed: 0,
-    tasks: [
-      {
-        name: " Create to do List",
-        complete: true,
-        taskDue: "25/07/25",
-        additionalInformation: "",
-      },
-      {
-        name: " Investigate failing workflow",
-        complete: false,
-        taskDue: "25/07/25",
-        additionalInformation: "",
-      },
-      {
-        name: " Investigating failing nextfont in docker application",
-        complete: false,
-        taskDue: "25/07/25",
-        additionalInformation: "",
-      },
-      {
-        name: " Deploy to Develop",
-        complete: false,
-        taskDue: "25/07/25",
-        additionalInformation: "",
-      },
-      {
-        name: " Develop to Production",
-        complete: false,
-        taskDue: "25/07/25",
-        additionalInformation: "",
-      },
-      {
-        name: " Submit Assessment",
-        complete: false,
-        taskDue: "25/07/25",
-        additionalInformation: "",
-      },
-    ],
-  };
+  // const list: List = {
+  //   name: "Get Started",
+  //   total: 0,
+  //   completed: 0,
+  //   tasks: [
+  //     {
+  //       name: " Create to do List",
+  //       complete: true,
+  //       taskDue: "25/07/25",
+  //       additionalInformation: "",
+  //     },
+  //     {
+  //       name: " Investigate failing workflow",
+  //       complete: false,
+  //       taskDue: "25/07/25",
+  //       additionalInformation: "",
+  //     },
+  //     {
+  //       name: " Investigating failing nextfont in docker application",
+  //       complete: false,
+  //       taskDue: "25/07/25",
+  //       additionalInformation: "",
+  //     },
+  //     {
+  //       name: " Deploy to Develop",
+  //       complete: false,
+  //       taskDue: "25/07/25",
+  //       additionalInformation: "",
+  //     },
+  //     {
+  //       name: " Develop to Production",
+  //       complete: false,
+  //       taskDue: "25/07/25",
+  //       additionalInformation: "",
+  //     },
+  //     {
+  //       name: " Submit Assessment",
+  //       complete: false,
+  //       taskDue: "25/07/25",
+  //       additionalInformation: "",
+  //     },
+  //   ],
+  // };
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const updateTaskStatus = (task: Task): void => {
