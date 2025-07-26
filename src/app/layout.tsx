@@ -1,8 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, NextApiRequest } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/styles/globals.css";
 import SessionProvider from "./session-provider";
+import TokenValidator from "@/components/token-validator";
 export const dynamic = "force-dynamic";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,7 +30,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <SessionProvider>{children}</SessionProvider>
+        <SessionProvider>
+          {/* <TokenValidator /> */}
+          {children}
+        </SessionProvider>
       </body>
     </html>
   );

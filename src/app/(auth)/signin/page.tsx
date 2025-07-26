@@ -1,24 +1,14 @@
 "use client";
-import { Button } from "@heroui/react";
+import { Button, Checkbox } from "@heroui/react";
 import { Divider, Form, Input } from "@heroui/react";
 import { signIn, useSession } from "next-auth/react";
 import { Text } from "@/components/text";
-import "../../globals.css";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function SignIn() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (status === "authenticated") {
-  //     router.push("/dashboard");
-  //   }
-  //   console.log(status);
-  // }, [status, router]);
-
-  console.log(status);
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div>
@@ -48,7 +38,6 @@ export default function SignIn() {
                 variant="bordered"
               />
               <div className="flex justify-between gap">
-                {/* <Checkbox size="sm">Rememeber me</Checkbox> */}
                 <Text className="text-sm underline pt-4">Forgot password?</Text>
               </div>
             </fieldset>

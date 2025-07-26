@@ -1,19 +1,38 @@
 "use client";
-
 import SearchIcon from "@/components/search-icon";
-import { Button, Input, Progress } from "@heroui/react";
+import { Button, Input, Spinner } from "@heroui/react";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { Text } from "@/components/text";
-import { List } from "@/lib/types";
+import { List, newList } from "@/lib/types";
+import { useEffect, useState } from "react";
+import { createList, getAllLists } from "@/lib/actions/actions";
 
 export default function Dashboard() {
+  const [myList, setMyList] = useState<List[]>([]);
   const router = useRouter();
-  const myList: List[] = [
-    { title: "BE Bugs", total: 10, completed: 5 },
-    { title: "FE Bugs", total: 10, completed: 8 },
-    { title: "Get Started", total: 9, completed: 7 },
-  ]; //temporary
+  const { data: session, status } = useSession();
+  const userId = (session as any)?.id;
+  useEffect(() => {
+    const fetchLists = async () => {
+      try {
+        if (status === "unauthenticated") router.push("/signin");
+        if (userId != undefined) {
+          const totalLists = await getAllLists(parseInt(userId));
+          setMyList(totalLists);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchLists();
+  }, [userId]);
+  if (status === "loading")
+    return (
+      <>
+        <p>Loading... </p>
+        <Spinner size="lg" />
+      </>
+    );
   return (
     <div>
       <main className="w-full min-h-screen p-6 ">
@@ -45,8 +64,11 @@ export default function Dashboard() {
                   key={index}
                   variant="bordered"
                   className="w-full bg-white flex  rounded-md border-gray-200 hover:border-black justify-between "
+                  onPress={() => {
+                    if (list?.id) router.push(`/list/${list.id}`);
+                  }}
                 >
-                  <p>{list.title}</p>
+                  <p>{list.name}</p>
                   <p>
                     {list.completed}/{list.total}
                   </p>
@@ -60,22 +82,28 @@ export default function Dashboard() {
             <Button
               variant="bordered"
               className="w-full bg-black text-white px-4 py-2 rounded-md "
-              onPress={() => router.push("/task")}
+              onPress={async () => {
+                const list = await createList(newList, parseInt(userId)).then(
+                  (id) => {
+                    router.push(`/list/${id}`);
+                  }
+                );
+              }}
             >
               + New List
             </Button>
           </div>
         </div>
-        <div className="flex items-center justify-center">
-          <div className="w-3/5  pt-25">
+        <div className="flex items-center justify-center pt-25">
+          <div className=" w-3/5 flex justify-start">
             <Button
               color="primary"
               type="submit"
               variant="solid"
-              className="bg-black text-white px-4 py-2 rounded-lg "
+              className="bg-black text-white px-4 py-2 rounded-md "
               onPress={async () => signOut({ callbackUrl: "/signin" })}
             >
-              Sign Out
+              SignOut
             </Button>
           </div>
         </div>

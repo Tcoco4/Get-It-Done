@@ -7,10 +7,10 @@ export const NAVIGATION = [
     matchPath: (pathname: string) => pathname === "/dashboard",
   },
   {
-    href: "/task",
+    href: "/list",
     icon: "",
     label: "Task",
-    tooltipDescription: "Task List",
-    matchPath: (pathname: string) => pathname === "/task",
+    tooltipDescription: "List",
+    matchPath: (pathname: string) => pathname === "/list",
   },
 ];
