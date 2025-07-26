@@ -5,64 +5,39 @@ import EditIcon from "@/components/edit-con";
 import { List } from "@/lib/types";
 
 import { Button, Checkbox, useDisclosure } from "@heroui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { getList } from "@/lib/actions/actions";
+import { useParams } from "next/navigation";
 
 export default function Task() {
-  const [isSelected, setIsSelected] = useState(false);
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const [isSelected, setIsSelected] = useState<boolean>(false);
+
+  const [list, setList] = useState<List | null>();
   const router = useRouter();
+  const params = useParams();
   type Task = {
     name: string;
     complete: boolean;
-    taskDue?: Date | string;
+    taskDue?: null | string;
     additionalInformation?: string;
   };
 
-  // const list: List = {
-  //   name: "Get Started",
-  //   total: 0,
-  //   completed: 0,
-  //   tasks: [
-  //     {
-  //       name: " Create to do List",
-  //       complete: true,
-  //       taskDue: "25/07/25",
-  //       additionalInformation: "",
-  //     },
-  //     {
-  //       name: " Investigate failing workflow",
-  //       complete: false,
-  //       taskDue: "25/07/25",
-  //       additionalInformation: "",
-  //     },
-  //     {
-  //       name: " Investigating failing nextfont in docker application",
-  //       complete: false,
-  //       taskDue: "25/07/25",
-  //       additionalInformation: "",
-  //     },
-  //     {
-  //       name: " Deploy to Develop",
-  //       complete: false,
-  //       taskDue: "25/07/25",
-  //       additionalInformation: "",
-  //     },
-  //     {
-  //       name: " Develop to Production",
-  //       complete: false,
-  //       taskDue: "25/07/25",
-  //       additionalInformation: "",
-  //     },
-  //     {
-  //       name: " Submit Assessment",
-  //       complete: false,
-  //       taskDue: "25/07/25",
-  //       additionalInformation: "",
-  //     },
-  //   ],
-  // };
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const listId = params.id;
 
+  useEffect(() => {
+    const fetchList = async () => {
+      try {
+        if (status === "unauthenticated") router.push("/signin");
+        const fetchedList = await getList(parseInt(listId as string));
+        setList(fetchedList);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchList();
+  }, [listId]);
   const updateTaskStatus = (task: Task): void => {
     console.log({ task });
     setIsSelected(!isSelected);
@@ -76,7 +51,7 @@ export default function Task() {
         <div id="title" className="flex items-center justify-center p-2">
           <div className="flex w-3/5">
             <div className=" flex justify-between w-full">
-              <h1 className="text-4xl font-medium "> {list.name}</h1>
+              <h1 className="text-4xl font-medium test-black"> {list?.name}</h1>
               <div className="  ">
                 <div className="flex justify-between">
                   <div className="flex justify-between pt-1.5">
@@ -104,21 +79,21 @@ export default function Task() {
           <div id="new-task" className="flex w-3/5  ">
             <table className=" w-full border-separate border-spacing-y-4 ">
               <tbody className="rounded-md">
-                {list.tasks?.map((task, index) => (
+                {list?.tasks?.map((task, index) => (
                   <tr key={index} className="bg-black text-white h-15  ">
                     <td className="px-4 py-2 rounded-l-lg">
                       <Checkbox
                         lineThrough
                         color="default"
-                        isSelected={task.complete}
+                        isSelected={task?.complete}
                         onValueChange={() => updateTaskStatus(task)}
                       >
-                        <p className="text-white">{task.name}</p>
+                        <p className="text-white">{task?.name}</p>
                       </Checkbox>
                     </td>
 
                     <td className="px-4 py-2 rounded-r-lg flex justify-end gap-2 ">
-                      {task.complete ? (
+                      {task?.complete ? (
                         <></>
                       ) : (
                         <EditIcon className="p-1 fill-white" />

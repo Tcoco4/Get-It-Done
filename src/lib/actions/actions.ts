@@ -1,8 +1,6 @@
 "use server";
 import { AuthenticatedUser, List, Task } from "../types";
 import prisma from "../prisma-client/prisma";
-import crypto from "crypto";
-import { select } from "@heroui/react";
 
 //Lists
 export const getAllLists = async (id: number): Promise<List[]> => {
@@ -32,12 +30,11 @@ export const createList = async (
   return newList.id;
 };
 
-export const getList = async (id: number): Promise<List> => {
+export const getList = async (id: number): Promise<List | null> => {
   const list = await prisma.list.findFirst({
     where: { id: id },
   });
 
-  if (!list) throw new Error("id does not exist");
   return list;
 };
 
