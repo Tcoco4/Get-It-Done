@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@heroui/react";
+import { Button, Checkbox } from "@heroui/react";
 import { Divider, Form, Input } from "@heroui/react";
 import { signIn, useSession } from "next-auth/react";
 import { Text } from "@/components/text";
