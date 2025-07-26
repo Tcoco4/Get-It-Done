@@ -65,6 +65,7 @@ export default function Dashboard() {
                   key={index}
                   variant="bordered"
                   className="w-full bg-white flex  rounded-md border-gray-200 hover:border-black justify-between "
+                  onPress={() => router.push(`/list/${list.id}`)}
                 >
                   <p>{list.name}</p>
                   <p>

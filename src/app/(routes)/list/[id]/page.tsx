@@ -123,7 +123,7 @@ export default function ListPage() {
           <div id="new-task" className="flex w-3/5  ">
             {list?.tasks?.length == 0 ? (
               <p className="flex w-full justify-center items-center text-gray-400">
-                No tasks in list..
+                No tasks in list...
               </p>
             ) : (
               <table className=" w-full border-separate border-spacing-y-4 ">
