@@ -2,19 +2,24 @@
 import TaskModal from "@/components/task-modal";
 import DeleteIcon from "@/components/delete-icon";
 import EditIcon from "@/components/edit-con";
-import { List, Task } from "@/lib/types";
+import { List } from "@/lib/types";
 
-import { Button, Checkbox, useDisclosure } from "@heroui/react";
+import { Button, Checkbox, Input, useDisclosure } from "@heroui/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getList, updateTaskStatus } from "@/lib/actions/actions";
+import {
+  getList,
+  updateTaskStatus,
+  updateListName,
+  deleteList,
+} from "@/lib/actions/actions";
 import { useParams } from "next/navigation";
 
 export default function ListPage() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [isSelected, setIsSelected] = useState<boolean>(false);
-
   const [list, setList] = useState<List | null>();
+  const [listName, setListName] = useState<string | undefined>("");
+  const [disabled, setDisabled] = useState<boolean>(true);
   const router = useRouter();
   const params = useParams();
 
@@ -23,9 +28,9 @@ export default function ListPage() {
   useEffect(() => {
     const fetchList = async () => {
       try {
-        if (status === "unauthenticated") router.push("/signin");
         const fetchedList = await getList(parseInt(listId as string));
         setList(fetchedList);
+        setListName(fetchedList?.name);
       } catch (err) {
         console.error(err);
       }
@@ -33,29 +38,58 @@ export default function ListPage() {
     fetchList();
   }, [listId]);
 
-  console.log(list);
-  const updateStatus = (value: boolean, task: Task): void => {
-    console.log("updateTaskStatus");
-    updateTaskStatus(task.id, value).then((res) => {
-      console.log(res);
-      task.complete = res;
+  const updateStatus = async (
+    value: boolean,
+    taskId: number
+  ): Promise<void> => {
+    await updateTaskStatus(taskId, value).then((res) => {
+      //refresh component to get latest data
     });
-    // task.complete = !task.complete;
-    //Server action call to change object and save to db
+  };
+  const updateName = async (
+    listName: string,
+    listId: number
+  ): Promise<void> => {
+    await updateListName(listId, listName).then((_) => {
+      //refresh component to get latest data
+    });
   };
 
+  const deleteTheList = async (listId: number): Promise<void> => {
+    await deleteList(listId).then((_) => {
+      router.push("/dashboard");
+    });
+  };
   return (
     <div>
       <main className="w-full min-h-screen p-6">
         <div id="title" className="flex items-center justify-center p-2">
           <div className="flex w-3/5">
             <div className=" flex justify-between w-full">
-              <h1 className="text-4xl font-medium test-black"> {list?.name}</h1>
+              <Input
+                className="text-xl w-40 font-extrabold shadow-none click-events-none"
+                size="lg"
+                variant="underlined"
+                isDisabled={disabled}
+                name="list-name"
+                value={listName}
+                onValueChange={(e) => setListName(e)}
+                onBlur={() => {
+                  updateName(listName!, list?.id!), setDisabled(!disabled);
+                }}
+              />
+
               <div className="  ">
                 <div className="flex justify-between">
                   <div className="flex justify-between pt-1.5">
-                    <EditIcon className="p-1" />
-                    <DeleteIcon className="p-1" />
+                    <EditIcon
+                      className="p-1"
+                      onClick={() => setDisabled(!disabled)}
+                    />
+                    <DeleteIcon
+                      className="p-1"
+                      onClick={() => deleteTheList(list?.id!)}
+                    />
                   </div>
 
                   <Button

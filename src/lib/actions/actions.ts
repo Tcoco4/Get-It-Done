@@ -49,7 +49,16 @@ export const deleteList = async (id: number): Promise<boolean | Error> => {
   if (!list) throw new Error(" id does not exist");
   return list.auditStatus == "deleted" ? true : false;
 };
-
+export const updateListName = async (
+  id: number,
+  name: string
+): Promise<boolean> => {
+  const updatedListName = await prisma.list.update({
+    where: { id: id },
+    data: { name: name },
+  });
+  return updatedListName.name == name ? true : false;
+};
 //Tasks
 export const addTask = async (task: Task, listId: number): Promise<number> => {
   const newTask = await prisma.task.create({
