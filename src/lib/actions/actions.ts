@@ -1,3 +1,4 @@
+"use server";
 import { AuthenticatedUser, List, Task } from "../types";
 import prisma from "../prisma-client/prisma";
 import crypto from "crypto";

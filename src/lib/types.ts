@@ -16,3 +16,9 @@ export type Task = {
   taskDue?: string | null;
   additionalInformation?: string;
 };
+
+export const newList: List = {
+  name: "New List",
+  total: 0,
+  completed: 0,
+};

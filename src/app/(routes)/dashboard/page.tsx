@@ -1,17 +1,37 @@
 "use client";
 import SearchIcon from "@/components/search-icon";
-import { Button, Input } from "@heroui/react";
-import { signOut } from "next-auth/react";
+import { Button, Input, Spinner } from "@heroui/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { List } from "@/lib/types";
+import { List, newList } from "@/lib/types";
+import { useEffect, useState } from "react";
+import { createList, getAllLists } from "@/lib/actions/actions";
 
 export default function Dashboard() {
+  const [myList, setMyList] = useState<List[]>([]);
   const router = useRouter();
-  const myList: List[] = [
-    { name: "BE Bugs", total: 10, completed: 5 },
-    { name: "FE Bugs", total: 10, completed: 8 },
-    { name: "Get Started", total: 9, completed: 7 },
-  ]; //temporary
+  const { data: session, status } = useSession();
+  const userId = session?.id;
+
+  useEffect(() => {
+    const fetchLists = async () => {
+      try {
+        if (status === "unauthenticated") router.push("/signin");
+        const totalLists = await getAllLists(userId);
+        setMyList(totalLists);
+      } catch (err) {
+        console.error(err);
+      }
+      fetchLists();
+    };
+  }, [status, userId]);
+  if (status === "loading")
+    return (
+      <>
+        <p>Loading... </p>
+        <Spinner size="lg" />
+      </>
+    );
   return (
     <div>
       <main className="w-full min-h-screen p-6 ">
@@ -58,7 +78,13 @@ export default function Dashboard() {
             <Button
               variant="bordered"
               className="w-full bg-black text-white px-4 py-2 rounded-md "
-              onPress={() => router.push("/task")}
+              onPress={async () => {
+                const list = await createList(newList, parseInt(userId)).then(
+                  (id) => {
+                    router.push(`/task/${id}`);
+                  }
+                );
+              }}
             >
               + New List
             </Button>
