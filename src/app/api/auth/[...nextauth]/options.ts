@@ -1,5 +1,6 @@
 import { addUser, getUser } from "@/lib/actions/actions";
 import { NextAuthOptions } from "next-auth";
+import { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -43,6 +44,7 @@ export const options: NextAuthOptions = {
     },
     async session({ session, token }) {
       const foundUser = await getUser(token.email!);
+      document.cookie = `authToken=${token.accessToken}; path=/`;
       return { ...session, accessToken: token.accessToken, id: foundUser?.id };
     },
     async signIn({ user }) {
