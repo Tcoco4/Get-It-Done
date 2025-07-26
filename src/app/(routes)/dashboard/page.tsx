@@ -11,8 +11,7 @@ export default function Dashboard() {
   const [myList, setMyList] = useState<List[]>([]);
   const router = useRouter();
   const { data: session, status } = useSession();
-  const userId = session?.id;
-
+  const userId = (session as any)?.id;
   useEffect(() => {
     const fetchLists = async () => {
       try {
