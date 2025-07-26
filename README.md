@@ -1,4 +1,4 @@
-This is a To Do List App built with nextJS, TailwindCSS, Prisma ORM and a Postgres DB
+To Do List App built with nextJS, TailwindCSS, Prisma ORM and a Postgres DB
 
 ## Live Environments
 
