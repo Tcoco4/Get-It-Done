@@ -1,11 +1,15 @@
-This is a To Do List Web Application built with nextJS, TailwindCSS, PrismaORM and a Postgres DB
+This is a To Do List Web Application built with nextJS, TailwindCSS, Prisma ORM and a Postgres DB
 
 ## Live Environments
 
-- Production #
-- Playground #
+- Production [get-it-done-eta.vercel.app](https://get-it-done-eta.vercel.app/)
 
 ## To Run
+
 - Clone Repo
-- run npm i
-- run npm run dev
+- Setup DB using [DB Setup](docs/dbsetup.md)
+- run `docker-compose up --build`
+- run `npm install`
+- run `npx prisma generate`
+- run `npx prisma migrate dev`
+- run `npm run dev`
