@@ -7,7 +7,6 @@ export const getAllLists = async (id: number): Promise<List[]> => {
   return await prisma.list.findMany({
     where: { userId: id, auditStatus: "active" },
   });
-  //   return [{ title: "", total: 0, completed: 0, tasks: [] }] as unknown as List;
 };
 
 export const createList = async (
@@ -33,8 +32,8 @@ export const createList = async (
 export const getList = async (id: number): Promise<List | null> => {
   const list = await prisma.list.findFirst({
     where: { id: id },
+    include: { tasks: true },
   });
-
   return list;
 };
 

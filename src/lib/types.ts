@@ -4,6 +4,7 @@ export interface AuthenticatedUser {
   email?: string;
 }
 export interface List {
+  id: number;
   name: string;
   total: number;
   completed: number;
@@ -11,6 +12,7 @@ export interface List {
 }
 
 export type Task = {
+  id: number;
   name: string;
   complete: boolean;
   taskDue?: string | null;
@@ -18,7 +20,8 @@ export type Task = {
 };
 
 export const newList: List = {
-  name: "New List",
+  id: 999,
+  name: "New List ",
   total: 0,
   completed: 0,
 };
