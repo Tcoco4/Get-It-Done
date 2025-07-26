@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "migrate:local": "npx prisma migrate dev --env-file=.env.local",
-    "migrate:docker": "npx prisma migrate dev --env-file=.env.docker"
+    "migrate:docker": "npx prisma migrate dev --env-file=.env.docker",
+    "vercel-build--prod": "npx prisma generate && npx prisma migrate deploy && next build"
   },
   "dependencies": {
     "@heroui/react": "^2.8.1",
