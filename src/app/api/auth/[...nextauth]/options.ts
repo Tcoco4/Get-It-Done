@@ -44,7 +44,7 @@ export const options: NextAuthOptions = {
     },
     async session({ session, token }) {
       const foundUser = await getUser(token.email!);
-      document.cookie = `authToken=${token.accessToken}; path=/`;
+      // document.cookie = `authToken=${token.accessToken}; path=/`;
       return { ...session, accessToken: token.accessToken, id: foundUser?.id };
     },
     async signIn({ user }) {
