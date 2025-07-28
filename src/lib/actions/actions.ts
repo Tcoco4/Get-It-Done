@@ -77,6 +77,14 @@ export const addTask = async (task: Task, listId: number): Promise<number> => {
       },
     },
   });
+  await prisma.list.update({
+    where: { id: listId },
+    data: {
+      total: {
+        increment: 1,
+      },
+    },
+  });
   return newTask.id;
 };
 export const getTask = async (id: number): Promise<Task> => {
@@ -93,9 +101,16 @@ export const deleteTask = async (
   const task = await prisma.task.update({
     where: { id: taskId, listId: listId },
     data: { auditStatus: "deleted" },
-    select: { auditStatus: true },
+    select: { auditStatus: true, complete: true },
   });
-  // .catch((err: any) => console.error(err));
+
+  await prisma.list.update({
+    where: { id: listId },
+    data: {
+      ...(task.complete === true && { completed: { decrement: 1 } }),
+      total: { decrement: 1 },
+    },
+  });
 
   return task.auditStatus == "deleted" ? true : false;
 };
@@ -106,6 +121,11 @@ export const updateTaskStatus = async (
   const updatedTaskStatus = await prisma.task.update({
     where: { id: id },
     data: { complete: status },
+  });
+
+  await prisma.list.update({
+    where: { id: updatedTaskStatus.listId },
+    data: { completed: status == true ? { increment: 1 } : { decrement: 1 } },
   });
 
   return updatedTaskStatus.complete == status ? true : false;
